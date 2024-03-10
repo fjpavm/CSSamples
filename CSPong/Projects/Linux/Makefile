@@ -114,7 +114,7 @@ endif
 # rule to run ChiliSource project make 
 .PHONY: $(CHILLISOURCE_PROJECT_DIR)
 $(CHILLISOURCE_PROJECT_DIR):
-	$(MAKE) --directory=$@ TARGET_VERSION=$(TARGET_VERSION)
+	$(MAKE) --directory=$@ PLATFORM=$(PLATFORM) TARGET_ARCHITECTURE=$(TARGET_ARCHITECTURE) TARGET_VERSION=$(TARGET_VERSION) 
 
 # cleanning need *.o for when errors interupt build midway
 .PHONY: clean
