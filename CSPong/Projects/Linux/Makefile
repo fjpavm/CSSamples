@@ -95,8 +95,7 @@ define make_object_rule
 $2 : $1
 	$$(MKDIR) $$(dir $(2))
 	$$(call make-depend, $1, $2, $3)
-	$$(COMPILE.cpp) -c $1
-	mv *.o $$(dir $(2)) || true
+	$$(COMPILE.cpp) $1 -o $$@
 endef
 
 
@@ -114,13 +113,11 @@ endif
 # rule to run ChiliSource project make 
 .PHONY: $(CHILLISOURCE_PROJECT_DIR)
 $(CHILLISOURCE_PROJECT_DIR):
-	$(MAKE) --directory=$@ PLATFORM=$(PLATFORM) TARGET_ARCHITECTURE=$(TARGET_ARCHITECTURE) TARGET_VERSION=$(TARGET_VERSION) 
+	$(MAKE) --directory=$@ -j1 PLATFORM=$(PLATFORM) TARGET_ARCHITECTURE=$(TARGET_ARCHITECTURE) TARGET_VERSION=$(TARGET_VERSION) 
 
-# cleanning need *.o for when errors interupt build midway
 .PHONY: clean
 clean :
 	rm -r csobj || true
-	rm *.o || true
 
 .PHONY: clean_all
 clean_all: clean
