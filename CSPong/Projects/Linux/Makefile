@@ -28,10 +28,12 @@ MKDIR = mkdir -p
 
 PLATFORM = Linux
 SRC_DIR = ../../AppSource/
-CHILLISOURCE_PROJECT_DIR = ../../ChilliSource/Projects/$(PLATFORM)
-CHILLISOURCE_SRC_DIR = ../../ChilliSource/Source/
-CORE_LIB_DIR = ../../ChilliSource/Libraries/Core/$(PLATFORM)
-CRICKET_LIB_DIR = ../../ChilliSource/Libraries/CricketAudio/$(PLATFORM)
+CHILLISOURCE_DIR = ../../ChilliSource
+CHILLISOURCE_SCRIPTS_DIR = $(CHILLISOURCE_DIR)/Tools/Scripts
+CHILLISOURCE_PROJECT_DIR = $(CHILLISOURCE_DIR)/Projects/$(PLATFORM)
+CHILLISOURCE_HEADERS_DIR = $(CHILLISOURCE_DIR)/Source/
+CORE_LIB_DIR = $(CHILLISOURCE_DIR)/Libraries/Core/$(PLATFORM)
+CRICKET_LIB_DIR = $(CHILLISOURCE_DIR)/Libraries/CricketAudio/$(PLATFORM)
 CHILLISOURCE_LIB_DIR = $(CHILLISOURCE_PROJECT_DIR)/csbin/$(PLATFORM)
 OBJ_DIR = $(SOLUTION_DIR)/csobj/$(PLATFORM)/
 OUT_DIR = $(SOLUTION_DIR)/csbin/$(PLATFORM)/
@@ -50,7 +52,7 @@ CPPFLAGS += $(if $(or $(call eq,$(TARGET_VERSION),debug),$(call eq,$(TARGET_VERS
 CPPFLAGS += $(if $(call eq,$(TARGET_ARCHITECTURE),x86_64), -m64 )
 CPPFLAGS += $(if $(call eq,$(TARGET_ARCHITECTURE),x86_32), -m32 )
 # add needed include path
-CPPFLAGS += -I $(SRC_DIR) -I $(CORE_LIB_DIR)/Headers -I $(CHILLISOURCE_SRC_DIR) 
+CPPFLAGS += -I $(SRC_DIR) -I $(CORE_LIB_DIR)/Headers -I $(CHILLISOURCE_HEADERS_DIR) 
 CPPFLAGS += -include string -include cstring
 # add platform define
 CPPFLAGS += -DCS_TARGETPLATFORM_$(call to_upper,$(PLATFORM))
@@ -137,11 +139,8 @@ $(OUT_PREFIX_DIR)/$(PROJECT_NAME) : $(OBJ_PREFIX_DIR_OBJECTS) $(CHILLISOURCE_PRO
 	$(MKDIR) $(OUT_PREFIX_DIR)
 	$(LINK.cpp) -o $(OUT_PREFIX_DIR)/$(PROJECT_NAME) $(OBJ_PREFIX_DIR_OBJECTS) $(CPPFLAGS)
 
- 
 
 .PHONY : copy_resources
 copy_resources :
-#	python ../../Tools/Scripts/extract_headers.py -i "$(SRC_DIR)/" -o "$(OUT_DIR)Headers"
-#	python ../../Tools/Scripts/extract_headers.py -i "$(PLATFORM_SRC_DIR)/" -o "$(OUT_DIR)PlatformHeaders"
-#	cp -rf $(OUT_DIR)PlatformHeaders/* $(OUT_DIR)Headers/ || true
-#	rm -rf $(OUT_DIR)PlatformHeaders
+	python $(CHILLISOURCE_SCRIPTS_DIR)/copy_linux_resources.py "$(SOLUTION_DIR)/" "$(OUT_PREFIX_DIR)"
+
