@@ -40,8 +40,8 @@ OUT_DIR = $(SOLUTION_DIR)/csbin/$(PLATFORM)/
 TARGET_ARCHITECTURE = x86_64
 TARGET_VERSION = release
 
-LIBS_LINUX = CSBase  sfml-window-s sfml-system-s crypto ssl curl GLEW
-SHARED_LIBS_LINUX = z X11 Xrandr Xcursor GL udev asound ogg pthread
+LIBS_LINUX = CSBase  sfml-window-s sfml-system-s crypto ssl curl GLEW z
+SHARED_LIBS_LINUX = X11 Xrandr Xcursor GL udev asound ogg pthread
 
 #CPPFLAGS += -fpermissive
 # add compiler use c++11 flags
