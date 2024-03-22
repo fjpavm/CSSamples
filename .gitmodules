@@ -1,8 +1,8 @@
 [submodule "CSPong/ChilliSource"]
 	path = CSPong/ChilliSource
 	url = https://github.com/fjpavm/ChilliSource.git
-	branch = linux
+	branch = master
 [submodule "CSRunner/ChilliSource"]
 	path = CSRunner/ChilliSource
 	url = https://github.com/fjpavm/ChilliSource.git
-	branch = linux
+	branch = master
